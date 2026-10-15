@@ -1,0 +1,785 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сергей Есенин — жизнь и поэзия</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --gold: #d8b77b;
+    --cream: #f0e8d9;
+    --muted: #b6aa98;
+    --bg: #10100f;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: "Manrope", sans-serif;
+    overflow: hidden;
+}
+
+#particles {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.site {
+    height: 100dvh;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 80% 20%, #4b38251f, transparent 45%),
+        linear-gradient(135deg, #171614, #0d0d0c);
+}
+
+.site::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border: 1px solid #d8b77b38;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.topbar {
+    position: absolute;
+    z-index: 10;
+    top: 32px;
+    left: 6%;
+    right: 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.brand {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+}
+
+.counter {
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.counter span {
+    color: var(--gold);
+    font-size: 18px;
+}
+
+.slides {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    padding: 100px 10% 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(25px) scale(.99);
+    transition:
+        opacity .7s ease,
+        transform .7s ease,
+        visibility .7s;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    z-index: 1;
+}
+
+.text-side {
+    flex: 1;
+    min-width: 0;
+    max-width: 620px;
+}
+
+.eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.eyebrow::before {
+    content: "";
+    height: 1px;
+    width: 30px;
+    background: var(--gold);
+}
+
+h1, h2, h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+}
+
+h1 {
+    font-size: clamp(65px, 10vw, 145px);
+    line-height: .78;
+    letter-spacing: -4px;
+    margin-bottom: 28px;
+}
+
+h2 {
+    font-size: clamp(43px, 6vw, 76px);
+    line-height: .95;
+    margin-bottom: 24px;
+}
+
+h3 {
+    font-size: 29px;
+    margin-bottom: 12px;
+}
+
+.gold {
+    color: var(--gold);
+}
+
+.description {
+    max-width: 490px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.9;
+    font-weight: 300;
+}
+
+.year {
+    margin-top: 28px;
+    color: var(--gold);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 24px;
+    letter-spacing: 3px;
+}
+
+.photo-wrap {
+    flex: 0 1 390px;
+    width: 100%;
+    max-width: 390px;
+    height: min(58vh, 490px);
+    min-height: 250px;
+    position: relative;
+    animation: float 7s ease-in-out infinite;
+}
+
+.photo-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 14px -14px -14px 14px;
+    border: 1px solid #d8b77b80;
+    z-index: -1;
+}
+
+.photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(.22) brightness(.8) contrast(1.08);
+    transition: filter .5s, transform .8s;
+}
+
+.photo-wrap:hover img {
+    filter: sepia(0) brightness(1);
+    transform: scale(1.025);
+}
+
+.photo-label {
+    position: absolute;
+    bottom: 16px;
+    left: -20px;
+    padding: 12px 18px;
+    background: #171614;
+    border: 1px solid #d8b77b55;
+    color: var(--gold);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 18px;
+}
+
+.cover {
+    justify-content: flex-start;
+}
+
+.cover .text-side {
+    position: relative;
+    z-index: 1;
+}
+
+.cover .photo-wrap {
+    position: absolute;
+    right: 10%;
+    top: 19%;
+    width: 33%;
+    height: 65%;
+    max-width: 430px;
+    opacity: .8;
+}
+
+.cover .photo-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #10100f 0%, transparent 75%);
+}
+
+.cover .photo-wrap img {
+    object-position: center;
+}
+
+.cover .text-side {
+    max-width: 680px;
+}
+
+.cover .description {
+    max-width: 370px;
+}
+
+.rule {
+    width: 70px;
+    height: 1px;
+    background: var(--gold);
+    margin: 26px 0;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    width: 100%;
+    max-width: 950px;
+    margin-top: 30px;
+}
+
+.info-card {
+    padding: 25px 22px;
+    border: 1px solid #d8b77b30;
+    background: linear-gradient(145deg, #ffffff08, #ffffff02);
+    min-height: 180px;
+    transition: transform .35s, border-color .35s, background .35s;
+}
+
+.info-card:hover {
+    transform: translateY(-7px);
+    border-color: #d8b77b99;
+    background: #d8b77b0b;
+}
+
+.card-number {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+}
+
+.info-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.centered {
+    flex-direction: column;
+    text-align: center;
+    gap: 0;
+}
+
+.centered .eyebrow {
+    justify-content: center;
+}
+
+.centered .description {
+    margin: 0 auto;
+}
+
+.centered .cards {
+    text-align: left;
+}
+
+.timeline {
+    margin-top: 28px;
+    border-left: 1px solid #d8b77b70;
+    padding-left: 22px;
+    display: grid;
+    gap: 18px;
+}
+
+.timeline-item strong {
+    display: block;
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.timeline-item p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.quote-mark {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 100px;
+    line-height: .7;
+    color: var(--gold);
+    opacity: .8;
+    margin-bottom: 25px;
+}
+
+.end-title {
+    font-size: clamp(48px, 7vw, 90px);
+    line-height: .95;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 32px;
+    left: 6%;
+    right: 6%;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+}
+
+.progress button {
+    width: 25px;
+    height: 3px;
+    border: none;
+    background: #ffffff30;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.progress button.active {
+    width: 45px;
+    background: var(--gold);
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-buttons button {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    border: 1px solid #d8b77b70;
+    background: transparent;
+    color: var(--gold);
+    font-size: 20px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.nav-buttons button:hover {
+    background: var(--gold);
+    color: #10100f;
+}
+
+.hint {
+    color: #847b6d;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.active .eyebrow,
+.active h1,
+.active h2,
+.active .description,
+.active .year,
+.active .cards,
+.active .timeline,
+.active .quote-mark,
+.active .rule {
+    animation: appear .8s both;
+}
+
+.active h1, .active h2 { animation-delay: .1s; }
+.active .description { animation-delay: .2s; }
+.active .cards, .active .timeline { animation-delay: .25s; }
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+@media (max-width: 760px) {
+    .topbar { top: 28px; }
+    .brand { letter-spacing: 2px; font-size: 9px; }
+    .slide {
+        padding: 85px 9% 95px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 20px;
+        overflow-y: auto;
+    }
+    .text-side { flex: none; }
+    h1 { font-size: clamp(60px, 16vw, 100px); }
+    h2 { font-size: clamp(42px, 11vw, 62px); }
+    .description { font-size: 12px; line-height: 1.7; }
+    .photo-wrap {
+        flex: none;
+        width: 48%;
+        height: 27vh;
+        min-height: 150px;
+        margin: 0 15px 15px auto;
+    }
+    .cover { justify-content: center; }
+    .cover .photo-wrap {
+        width: 48%;
+        height: 45%;
+        right: 8%;
+        top: 34%;
+        opacity: .45;
+    }
+    .cover .text-side { z-index: 3; }
+    .cover .description { max-width: 260px; }
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    .info-card {
+        min-height: auto;
+        padding: 15px 17px;
+    }
+    .card-number { margin-bottom: 8px; }
+    .info-card h3 { font-size: 24px; }
+    .centered { align-items: center; }
+    .centered .cards { text-align: left; }
+    .bottom { bottom: 23px; }
+    .hint { display: none; }
+    .nav-buttons button { width: 38px; height: 38px; }
+    .photo-label { font-size: 14px; left: -10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+<canvas id="particles"></canvas>
+
+<div class="site">
+    <header class="topbar">
+        <div class="brand">Литературный портрет</div>
+        <div class="counter"><span id="current">01</span> / 06</div>
+    </header>
+
+    <main class="slides">
+
+        <!-- СЛАЙД 1 -->
+        <section class="slide cover active">
+            <div class="text-side">
+                <div class="eyebrow">Русская литература</div>
+                <h1>Сергей<br><span class="gold">Есенин</span></h1>
+                <div class="rule"></div>
+                <p class="description">
+                    Поэт, который превратил любовь к родине,
+                    природе и человеку в искреннюю поэзию.
+                </p>
+                <div class="year">1895 — 1925</div>
+            </div>
+
+            <div class="photo-wrap">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9ogX24iw8Q_p87q7oxQ30--D75nFxo1TLTx0Qys-qZA&s=10"
+                     alt="Портрет Сергея Есенина">
+                <div class="photo-label">Поэт русской души</div>
+            </div>
+        </section>
+
+        <!-- СЛАЙД 2 -->
+        <section class="slide">
+            <div class="text-side">
+                <div class="eyebrow">01 / Начало пути</div>
+                <h2>Детство<br>и <span class="gold">родина</span></h2>
+                <p class="description">
+                    Сергей Есенин родился 3 октября 1895 года
+                    в селе Константиново Рязанской губернии.
+                    Он вырос среди русских полей, деревьев
+                    и народных песен. Именно деревенская жизнь
+                    стала главным источником его вдохновения.
+                </p>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>1895</strong>
+                        <p>Рождение в Константинове.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong>1912</strong>
+                        <p>Переезд в Москву и начало самостоятельной жизни.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="photo-wrap">
+                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=85"
+                     alt="Русские поля">
+                <div class="photo-label">Рязанская земля</div>
+            </div>
+        </section>
+
+        <!-- СЛАЙД 3 -->
+        <section class="slide">
+            <div class="text-side">
+                <div class="eyebrow">02 / Творчество</div>
+                <h2>Путь<br><span class="gold">поэта</span></h2>
+                <p class="description">
+                    В 1915 году Есенин приехал в Петроград,
+                    где познакомился с Александром Блоком.
+                    Его стихи быстро привлекли внимание читателей.
+                    В 1916 году вышел первый сборник поэта —
+                    «Радуница».
+                </p>
+                <div class="year">1916 · «Радуница»</div>
+            </div>
+            <div class="photo-wrap">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWVoYeuAmGWL8NyvEWTd_KJBOXoNHTGDZd144mek_nDg&s"
+                     alt="Сергей Есенин в молодости">
+                <div class="photo-label">Начало литературного пути</div>
+            </div>
+        </section>
+
+        <!-- СЛАЙД 4 -->
+        <section class="slide centered">
+            <div class="eyebrow">03 / Главные темы</div>
+            <h2>О чём писал <span class="gold">Есенин?</span></h2>
+            <p class="description">
+                В его стихах личные чувства соединяются с красотой окружающего мира.
+            </p>
+
+            <div class="cards">
+                <article class="info-card">
+                    <div class="card-number">01 — ПРИРОДА</div>
+                    <h3>Родные края</h3>
+                    <p>Поля, берёзы и смена времён года оживают в его поэзии.</p>
+                </article>
+                <article class="info-card">
+                    <div class="card-number">02 — ЧУВСТВА</div>
+                    <h3>Любовь</h3>
+                    <p>Лирический герой переживает нежность, тоску и разлуку.</p>
+                </article>
+                <article class="info-card">
+                    <div class="card-number">03 — РОССИЯ</div>
+                    <h3>Родина</h3>
+                    <p>Поэт размышляет о судьбе родной земли и переменах в жизни страны.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- СЛАЙД 5 -->
+        <section class="slide centered">
+            <div class="eyebrow">04 / Известные произведения</div>
+            <h2>Стихи, которые <span class="gold">помнят</span></h2>
+
+            <div class="cards">
+                <article class="info-card">
+                    <div class="card-number">1913</div>
+                    <h3>«Берёза»</h3>
+                    <p>Образ русской природы, переданный через спокойную зимнюю картину.</p>
+                </article>
+                <article class="info-card">
+                    <div class="card-number">1924</div>
+                    <h3>«Письмо матери»</h3>
+                    <p>Стихотворение о сыновней любви, тревоге и связи с родным домом.</p>
+                </article>
+                <article class="info-card">
+                    <div class="card-number">1925</div>
+                    <h3>«Шаганэ ты моя, Шаганэ!..»</h3>
+                    <p>Лирическое произведение, в котором южные впечатления переплетаются с памятью о родине.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- СЛАЙД 6 -->
+        <section class="slide centered">
+            <div class="quote-mark">“</div>
+            <div class="eyebrow">Вместо заключения</div>
+            <h2 class="end-title">Поэзия,<br>которая <span class="gold">живёт</span></h2>
+            <div class="rule"></div>
+            <p class="description">
+                Сергей Есенин прожил всего 30 лет, но оставил
+                произведения, которые продолжают читать и изучать.
+                Его стихи помогают увидеть красоту природы,
+                почувствовать любовь к родине и понять человеческие переживания.
+            </p>
+            <div class="year">1895 — 1925</div>
+        </section>
+
+    </main>
+
+    <footer class="bottom">
+        <div class="progress" id="progress">
+            <button class="active" aria-label="Слайд 1"></button>
+            <button aria-label="Слайд 2"></button>
+            <button aria-label="Слайд 3"></button>
+            <button aria-label="Слайд 4"></button>
+            <button aria-label="Слайд 5"></button>
+            <button aria-label="Слайд 6"></button>
+        </div>
+
+        <div class="hint">← → ДЛЯ ПЕРЕКЛЮЧЕНИЯ</div>
+
+        <div class="nav-buttons">
+            <button id="prev" aria-label="Предыдущий слайд">←</button>
+            <button id="next" aria-label="Следующий слайд">→</button>
+        </div>
+    </footer>
+</div>
+
+<script>
+const slides = [...document.querySelectorAll(".slide")];
+const dots = [...document.querySelectorAll(".progress button")];
+const currentLabel = document.getElementById("current");
+
+let current = 0;
+
+function showSlide(index) {
+    current = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === current);
+    });
+
+    dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === current);
+    });
+
+    currentLabel.textContent = String(current + 1).padStart(2, "0");
+}
+
+document.getElementById("next").addEventListener("click", () => {
+    showSlide(current + 1);
+});
+
+document.getElementById("prev").addEventListener("click", () => {
+    showSlide(current - 1);
+});
+
+dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => showSlide(index));
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "ArrowRight" || event.key === " ") {
+        showSlide(current + 1);
+    }
+
+    if (event.key === "ArrowLeft") {
+        showSlide(current - 1);
+    }
+});
+
+// Плавно движущиеся золотистые частицы
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+let width, height, particles = [];
+
+function resizeCanvas() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+
+    particles = Array.from(
+        { length: Math.min(65, Math.floor(width / 18)) },
+        () => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            size: Math.random() * 2 + 0.4,
+            speed: Math.random() * 0.35 + 0.12,
+            alpha: Math.random() * 0.55 + 0.15
+        })
+    );
+}
+
+function animateParticles() {
+    ctx.clearRect(0, 0, width, height);
+
+    for (const p of particles) {
+        p.y -= p.speed;
+        p.x += Math.sin(p.y * 0.008) * 0.15;
+
+        if (p.y < -5) {
+            p.y = height + 5;
+            p.x = Math.random() * width;
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(216, 183, 123, ${p.alpha})`;
+        ctx.fill();
+    }
+
+    requestAnimationFrame(animateParticles);
+}
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+animateParticles();
+
+// Переключение свайпом на телефоне
+let touchStartX = 0;
+
+document.querySelector(".slides").addEventListener("touchstart", event => {
+    touchStartX = event.changedTouches[0].screenX;
+}, { passive: true });
+
+document.querySelector(".slides").addEventListener("touchend", event => {
+    const delta = event.changedTouches[0].screenX - touchStartX;
+
+    if (Math.abs(delta) > 70) {
+        showSlide(current + (delta < 0 ? 1 : -1));
+    }
+}, { passive: true });
+</script>
+</body>
+</html>
